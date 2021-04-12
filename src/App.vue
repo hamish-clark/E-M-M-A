@@ -1,0 +1,201 @@
+<template>
+
+  <div id="outer">
+    <div id="nav" class="card">
+      <div class="button"> _ </div>
+      <h2> E M M A </h2>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/about">Public</router-link>
+      <router-link to="/about">Analyse</router-link> 
+
+    </div>
+
+    <div id="side" class="card">
+
+    </div>
+
+    <div id="content">
+      <router-view/>
+    </div>
+
+  </div>
+
+</template>
+
+<style lang="scss">
+
+:root {
+  --primary-bg: #eee;
+  --primary-fg: #f2f2f2;
+;
+
+  --primary: #333;
+  --secondary: #777;
+  --tertiary: #ccc;
+}
+
+html{
+  height: 100%;
+}
+
+body{
+  margin: 0;
+  height: 100%;
+
+  background: var(--primary-bg);
+  background: linear-gradient(329deg, #adadad, transparent);
+
+}
+
+#outer{
+  height: 100%;
+  display: grid;
+
+  grid-template:
+    "nav nav nav" min-content
+    "side content content"
+    "side content content" / 250px 1fr 1fr;
+
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  height: 100%;
+}
+
+.button {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 900;
+  width: 2em;
+  height: 2em;
+  background: #eae9e9;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 2em;
+  color: black;
+
+  transition: 
+    background ease 0.2s,
+    transform ease 0.2s;
+
+}
+
+.button:hover{
+  background: red;
+  transform: rotate(90deg);
+}
+
+.button text{
+  pointer-events: none;
+}
+
+.shade{
+  box-shadow: 
+    0px 0px 5px 3px rgba(0, 0, 0, 0.05),
+    0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  background: var(--primary-fg);
+  backdrop-filter: blur(20px) saturate(0.5);
+  box-shadow: 
+    0px 0px 5px 3px rgba(0, 0, 0, 0.05),
+    0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+
+#content {
+  grid-area: content;
+
+}
+
+#side {
+  max-width: 250px;
+  grid-area: side;
+  z-index: -1;
+
+  h1, h2, h3, p, li{
+    font-weight: normal;
+    text-align: left;
+    font-size: 1em;
+    margin: 0;
+    padding: 0.1em;
+  }
+
+  ul{
+    margin: 0;
+  }
+
+  h1{
+    background: var(--primary);
+    color: white;
+  }
+
+  h2{
+    background: var(--secondary);
+    color: rgb(169, 169, 169);
+
+  }
+
+  h3{
+    background: var(--tertiary);
+  }
+
+  p{
+    margin-left: 1em;
+  }
+
+}
+
+
+#nav {
+  grid-area: nav;
+
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 1em;
+
+  padding: 1.5em;
+
+
+  h2{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    margin-right: 1em;
+  }
+
+  a {
+    
+    line-height: 100%;
+    text-decoration: none;
+    background: #eeeeee;
+    padding: 0.5em 1em;
+    border-radius: 3px;
+    color: black;
+    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.076);
+
+    &.router-link-exact-active {
+      color: white;
+      background: red;
+    }
+  }
+
+  // a::before{
+  //   margin-right: 1em;
+  //   content : "";
+  // }
+  
+
+
+}
+
+
+
+</style>
