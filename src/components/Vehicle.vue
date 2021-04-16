@@ -11,16 +11,16 @@
       <a> PATRONAGE </a>
       <a> ... </a>
 
-      <div class="overlay">  </div>
+      <div class="overlay" :style="{ borderColor : randomColour() }">  </div>
 
       <div class="col_content">
+        
         <h1> {{ id}} </h1>
         <h2> {{ operator }} </h2>
         <p> {{ engine }} </p>
         <p> {{ tare_weight }}kg </p> 
 
       </div>
-
 
 
     </div> <!--box-->
@@ -35,6 +35,10 @@ import { Options, Vue } from 'vue-class-component';
   props: {
     id: String
   },
+
+  components : {
+  }
+  
 })
 export default class Vehicle extends Vue {
 
@@ -42,6 +46,16 @@ export default class Vehicle extends Vue {
   engine = "EURO3"
   operator = "Tranzurban"
   tare_weight = 8900
+
+  randomColour(){
+
+    let rgb_arr = [1, 1, 1].map(i => Math.random() * 100)
+
+    
+    return `rgb(${rgb_arr.join(",")})`
+  }
+
+  
 
 }
 
@@ -100,7 +114,7 @@ export default class Vehicle extends Vue {
     align-content: center;
     grid-column: 2/5;
     border-radius: 100%;
-    border: 15px solid blue;
+    border: 15px solid;
     aspect-ratio: 1/1;
     opacity: 0.5;
     justify-content: center;

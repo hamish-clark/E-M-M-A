@@ -1,6 +1,6 @@
 <template>
 
-  <div id="outer">
+  <div id="outer" v-cloak @drop.prevent @dragover.prevent>
     <div id="nav" class="card">
       <div class="button"> _ </div>
       <h2> E M M A </h2>
@@ -19,27 +19,49 @@
       <router-view/>
     </div>
 
+    <Timeline></Timeline>
+
+
   </div>
 
 </template>
+
+<script lang="ts">
+
+const BASE_URL = 'http://localhost:8080'
+
+import Timline from './components/Timeline.vue'
+
+export default {
+  name : 'E M M A',
+
+  components : {
+    Timeline : Timline
+  }
+}
+
+// fetch(`${BASE_URL}/fleet`).then(async res => {
+//   console.log(res);
+// })
+
+</script>
 
 <style lang="scss">
 
 :root {
   --primary-bg: #eee;
   --primary-fg: #f2f2f2;
-;
 
   --primary: #333;
   --secondary: #777;
   --tertiary: #ccc;
 }
 
-html{
+html {
   height: 100%;
 }
 
-body{
+body {
   margin: 0;
   height: 100%;
 
@@ -55,7 +77,8 @@ body{
   grid-template:
     "nav nav nav" min-content
     "side content content"
-    "side content content" / 250px 1fr 1fr;
+    "side content content"
+    "timeline timeline timeline" min-content / 250px 1fr 1fr;
 
 }
 
@@ -110,14 +133,17 @@ body{
 
 
 #content {
+
   grid-area: content;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
 }
 
 #side {
   max-width: 250px;
   grid-area: side;
-  z-index: -1;
+  z-index: 1;
 
   h1, h2, h3, p, li{
     font-weight: normal;
@@ -155,7 +181,7 @@ body{
 
 #nav {
   grid-area: nav;
-
+  z-index: 2;
   display: flex;
   flex-flow: row;
   align-items: center;

@@ -29,11 +29,25 @@
 
       </div>
     </div>
-    
-    
-    <div class="page" :v-for='row in ["3001", "3002", "3003", "3004"]'>
-      <Vehicle :id="row"> </Vehicle>
+
+    <DropFile> </DropFile>
+
+    <!-- <div class="page">
+      <Scatter> </Scatter>
     </div>
+    
+    <div class="page">
+      <Scatter> </Scatter>
+    </div>
+
+    <div class="page">
+      <Scatter> </Scatter>
+    </div> -->
+    
+    
+    <!-- <div class="page" v-for='row in ["3001", "3002", "3003", "3004"]' :key="row" >
+      <Vehicle :id="row"> </Vehicle>
+    </div> -->
 
 
   </div>
@@ -55,6 +69,7 @@ input{
 
 .home{
   display: flex;
+  flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -67,7 +82,6 @@ input{
   height: min-content;
 
   margin: 30px;
-  margin-bottom: 200px;
   border-radius: 0.3em;
   box-shadow: 0px 0px 12px 1px rgb(0 0 0 / 5%);
   
@@ -76,7 +90,6 @@ input{
 
 .page:hover{
   background: hsl(0, 0%, 95%);
-
   transform: translate(0px, -10px);
   box-shadow: 0px 10px 8px 1px rgb(0 0 0 / 5%);
 
@@ -91,12 +104,16 @@ input{
   import { Options, Vue } from 'vue-class-component';
   import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
   import Vehicle from '@/components/Vehicle.vue'; // @ is an alias to /src
+  import DropFile from '@/components/DropFile.vue'; // @ is an alias to /src
+  import Scatter from '@/components/Scatter.vue'; // @ is an alias to /src
 
   @Options({
     components: {
       HelloWorld,
-      Vehicle
-    },
+      Vehicle,
+      DropFile,
+      Scatter
+    }
   })
   export default class Home extends Vue {}
 
