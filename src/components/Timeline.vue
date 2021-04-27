@@ -1,15 +1,20 @@
 <template>
+
   <div id="timeline__outer">
+
     <div id="timeline__header">
+
       <div id="minimise_button"><text> ▲ </text></div>
 
       <text>
         GTFS Version <b> {{ new Date().toISOString().slice(0, 10) }} </b>
       </text>
+
     </div>
 
     <div id="timeline__content">
       <div id="timeline__svg__outer">
+
         <svg
           id="timeline__svg"
           :width="width"
@@ -17,20 +22,22 @@
           :viewBox="viewBox()"
           preserveAspectRatio="xMidYMid slice"
         >
-          <!-- AXIS -->
-          <g :transform="`translate(${0}, ${0})`">
-            <vue-axis
-              :orient="axisTime.orient"
-              :scale="axisTime.scale"
-              :range="axisTime.range"
-              :domain="axisTime.domain"
-              :height="height"
-              :width="width"
-            ></vue-axis>
-          </g>
+
+        <!-- AXIS -->
+        <g :transform="`translate(${0}, ${0})`">
+          <vue-axis
+            :orient="axisTime.orient"
+            :scale="axisTime.scale"
+            :range="axisTime.range"
+            :domain="axisTime.domain"
+            :height="height"
+            :width="width"
+          ></vue-axis>
+        </g>
 
           <!-- DATA -->
           <g v-for="event in events" :key="event.date">
+
             <circle
               stroke="#333"
               :strokeWeight="1"
@@ -39,6 +46,7 @@
               r="4"
               :cx="time_scale(event.date)"
             ></circle>
+
             <text
               fill="blue"
               font-size="12"
@@ -46,8 +54,11 @@
               text-anchor="middle"
               :x="time_scale(event.date)"
             >
+
               {{ event.date.toISOString().slice(0, 10) }}
+
             </text>
+            
             <text
               font-size="12"
               dy="-42"
@@ -56,11 +67,17 @@
             >
               {{ event.info }}
             </text>
+
           </g>
+
         </svg>
+
       </div>
+
     </div>
+
   </div>
+  
 </template>
 
 <script lang="ts">
@@ -75,6 +92,23 @@ const versionid = (date: Date) => {
     .join("");
 };
 
+let v_id = versionid(new Date());
+
+// fetch(`http://localhost:56125/gtfs/versions`)
+//   .then(res => res.json())
+//   .then(payload => {
+
+//     for (let id of payload){
+//       fetch(`http://localhost:56125/gtfs/${id}`)
+//         .then((res) => res.json())
+//         .then((json) => console.log(json));
+//     }
+
+//   })
+
+/**
+ * Axis Component
+ */
 @Options({
   name: "vue-axis",
   props: {
@@ -84,9 +118,11 @@ const versionid = (date: Date) => {
     domain: Array,
     height: Number,
     width: Number,
+    tickSize : Number
   },
 
   template: `<g> </g>`,
+
 })
 export class VueAxis extends Vue {
   name = "VueAxis";
@@ -96,6 +132,7 @@ export class VueAxis extends Vue {
   scale = "scaleLinear";
   domain = [0, 100];
   range = [0, 100];
+  tickSize = -25
 
   orientMap: Map<string, any> = new Map([
     ["Left", d3.axisLeft],
@@ -123,32 +160,39 @@ export class VueAxis extends Vue {
 
   mounted() {
     let axis: any | undefined = this.orientMap.get(this.orient);
+    console.log(axis);
+    
     if (axis != undefined) {
       d3.select(this.$el)
         .call(
           axis(this._scale())
             .ticks(d3.timeMonth.every(3))
-            .tickSize(-25)
+            .tickSize(this.tickSize)
         )
-        .call((g) => g.select(".domain").remove())
-        .call((g) =>
+        .call((g : any) => g.select(".domain").remove())
+        .call((g : any)  =>
           g
-            .selectAll(".tick:not(:first-of-type) line")
+            .selectAll(".tick line")
+            // .selectAll(".tick:not(:first-of-type) line")
             .attr("stroke-opacity", 0.5)
             .attr("stroke-dasharray", "2,2")
         )
-        .call((g) =>
+        .call((g : any) =>
           g
             .selectAll(".tick text")
             .attr("x", 0)
             .attr("dx", 0)
         );
 
-      d3.select(this.$el).call(d3.brush());
+      // d3.select(this.$el).call(d3.brush());
     }
   }
 }
 
+
+/**
+ * Timeline Component
+ */
 @Options({
   components: {
     VueAxis,
@@ -183,10 +227,10 @@ export default class Timeline extends Vue {
   };
 
   events = [
-    // {date : new Date("2019-01-01"), info : 'New Year'},
-    // {date : new Date("2018-07-15"), info : 'PTOM start'},
-    // {date : new Date("2019-10-01"), info : 'PTBIS Switchover'},
-    // {date : new Date(), info : "Today"}
+    {date : new Date("2019-01-01"), info : 'New Year'},
+    {date : new Date("2018-07-15"), info : 'PTOM start'},
+    {date : new Date("2019-10-01"), info : 'PTBIS Switchover'},
+    {date : new Date(), info : "Today"}
   ];
 
   viewBox() {
@@ -194,17 +238,16 @@ export default class Timeline extends Vue {
   }
 
   mounted() {
-    let v_id = versionid(new Date());
-    fetch(`http://localhost:56125/gtfs/${v_id}`, {
-      mode: "no-cors",
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    console.log("mount");
+    
   }
+
 }
+
 </script>
 
 <style lang="css" scoped>
+
 #timeline__outer {
   box-sizing: border-box;
   z-index: 0;
@@ -281,4 +324,5 @@ export default class Timeline extends Vue {
   line-height: 1em;
   padding: 0;
 }
+
 </style>

@@ -30,7 +30,15 @@
       </div>
     </div>
 
+    <div class="page">
+      <Trend> </Trend>
+    </div>
+
     <DropFile> </DropFile>
+
+    <div class="page">
+      <DateRange> </DateRange>
+    </div>
 
     <!-- <div class="page">
       <Scatter> </Scatter>
@@ -85,12 +93,14 @@ input{
   border-radius: 0.3em;
   box-shadow: 0px 0px 12px 1px rgb(0 0 0 / 5%);
   
-  transition-duration: .3s;
+  transition-duration: .2s;
 }
 
 .page:hover{
-  background: hsl(0, 0%, 95%);
-  transform: translate(0px, -10px);
+  background: hsl(0, 0%, 98%);
+  padding: 10px;
+  margin: 20px;
+  // transform: translate(0px, -10px);
   box-shadow: 0px 10px 8px 1px rgb(0 0 0 / 5%);
 
 }
@@ -106,13 +116,16 @@ input{
   import Vehicle from '@/components/Vehicle.vue'; // @ is an alias to /src
   import DropFile from '@/components/DropFile.vue'; // @ is an alias to /src
   import Scatter from '@/components/Scatter.vue'; // @ is an alias to /src
+  import Trend from '@/components/Trend.vue'; 
+  import DateRange from '@/components/DateRange.vue'; 
 
   @Options({
     components: {
       HelloWorld,
       Vehicle,
       DropFile,
-      Scatter
+      Trend,
+      DateRange
     }
   })
   export default class Home extends Vue {}

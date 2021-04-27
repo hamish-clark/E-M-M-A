@@ -11,9 +11,7 @@
 <script lang="ts">
 
 import * as d3 from 'd3';
-import { Line } from 'd3';
-import { Vue } from 'vue-class-component'
-
+import { Options, Vue } from 'vue-class-component'
 
 export default class Scatter extends Vue {
   // Class properties will be component data

@@ -9,6 +9,26 @@
       <router-link to="/about">Public</router-link>
       <router-link to="/about">Analyse</router-link> 
 
+      <div id="event__container">
+
+      </div>
+
+      <div id="time__container" 
+        :style='{
+          "font-family": "Courier",
+          "display" : "flex",
+          "flex" : 1,
+          "flex-flow" : "row-reverse nowrap",
+          "margin" : 0,
+          "gap" : "1em"
+        }
+        '>
+
+        <h3 class="timeText"> {{ date_string }} </h3>
+        <h3 class="timeText"> {{ time_string }} </h3>
+
+      </div>
+
     </div>
 
     <div id="side" class="card">
@@ -32,13 +52,47 @@ const BASE_URL = 'http://localhost:8080'
 
 import Timline from './components/Timeline.vue'
 
-export default {
+import { defineComponent } from 'vue'
+
+function toLocalISOString(d : Date) : string {
+  var off = d.getTimezoneOffset();
+	return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - off, d.getSeconds(), d.getMilliseconds()).toISOString();
+}
+
+export default defineComponent({
   name : 'E M M A',
+
+  data : function() {
+    return {
+      updateTimestamp : new Date()
+    }
+  },
+
+  mounted : function() {
+    setInterval(()=> {
+      this.updateTimestamp = new Date()
+      
+    }, 1000)
+
+  },
+
+  computed : {
+    time_string() : string {
+      return toLocalISOString(this.updateTimestamp).slice(11, 19)
+
+    },
+
+    date_string() : string {
+      return toLocalISOString(this.updateTimestamp).slice(0, 10)
+    },
+
+  },
 
   components : {
     Timeline : Timline
-  }
-}
+  },
+
+})
 
 // fetch(`${BASE_URL}/fleet`).then(async res => {
 //   console.log(res);
@@ -176,6 +230,15 @@ body {
     margin-left: 1em;
   }
 
+}
+
+.timeText{
+  position: relative;
+  color: #c3dfff;
+  background: #2c3e50;
+  border-radius: 0.1em;
+  padding: 0.3em 0.4em;
+  line-height: 1em;
 }
 
 
