@@ -182,6 +182,7 @@ export class VueAxis extends Vue {
             .selectAll(".tick text")
             .attr("x", 0)
             .attr("dx", 0)
+            .attr("dy", 10)
         );
 
       // d3.select(this.$el).call(d3.brush());

@@ -80,7 +80,6 @@ input{
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  height: 100%;
 }
 
 .page{

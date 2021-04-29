@@ -80,9 +80,10 @@
 
           <!-- <path :d="route_line_path()" :transform ="`translate(${margin.left}, ${height+margin.bottom})`"></path> -->
 
-          
+          <!-- .filter(d=>d._id.month==month && d._id.year==year)"  -->
           <circle 
-            v-for="data in datum.filter(d=>d._id.month==month && d._id.year==year)" 
+            v-for="data in datum"
+            
             :key=data._id
             :cx=x_scale(data.pax_km)
             :cy=y_scale(data.CO2)
@@ -176,9 +177,9 @@ export default class Trend extends Vue {
 
 
   datum = []
-  x_scale = d3.scaleLinear([0, 700000], [this.margin.left, this.width])
-  y_scale = d3.scaleLinear([0, 60000], [this.margin.bottom, this.height])
-  s_scale = d3.scaleLinear([0, 20000], [3, 5])
+  x_scale = d3.scaleLinear([0, 800000], [this.margin.left, this.width])
+  y_scale = d3.scaleLinear([0, 110000], [this.height + this.margin.bottom , this.margin.bottom])
+  s_scale = d3.scaleLinear([0, 10000], [3, 5])
   
   incriment_month(){
     this.month += 1
@@ -224,10 +225,11 @@ export default class Trend extends Vue {
   flex-flow: row nowrap;
   display: flex;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
 }
 
 #col__header{
+  padding: 2em;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -269,6 +271,7 @@ path{
   margin: 3px;
   border: 1px solid #c7c7c7;
   height: 30px;
+  box-sizing: content-box;
   background: #ececec;
 }
 
@@ -278,7 +281,7 @@ path{
   border-radius: 0.3em;
   width: 100%;
   position: absolute;
-  top: 1.6em;
+  top: 3em;
   left: 0;
   padding: 0;
   margin: 0;
